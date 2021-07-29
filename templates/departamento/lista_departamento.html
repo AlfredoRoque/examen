@@ -44,10 +44,10 @@
             <td>{{departamento.codigo.codigo}}</td>
             <td>{{departamento.codigo.nombre}}</td>
             <td>
-                <a class="btn btn-primary" href="{% url 'modifica_departamento' departamento.codigo %}">EDITAR</a>
+                <a class="btn btn-primary" href="{% url 'modifica_departamento' departamento.cod %}">EDITAR</a>
             </td>
             <td>
-                <a class="btn btn-danger" href="{% url 'elimina_departamento' departamento.codigo %}">ELIMINAR</a>
+                <a class="btn btn-danger" href="{% url 'elimina_departamento' departamento.cod %}">ELIMINAR</a>
             </td>
         </tr>
         {%endfor%} {%else%}
