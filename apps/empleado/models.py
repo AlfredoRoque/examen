@@ -15,3 +15,4 @@ class Empleado(models.Model):
     fechaIngreso = models.DateField(auto_now=True)
     curp = models.CharField(max_length=50,primary_key=True)
 
+

@@ -18,7 +18,7 @@ class EmpresaCrear(CreateView):
     model = Empresa
     form_class = EmpresaForm
     template_name = 'empresa/formulario_empresa.html'
-    success_url =reverse_lazy('lista_empleado')
+    success_url =reverse_lazy('lista_empresa')
 
 class EmpresaEditar(UpdateView):
     model = Empresa
