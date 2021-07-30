@@ -24,6 +24,20 @@
     </ul>
     <form method="GET">
         <div class="input-group">
+            <label style="font-size: 22px;" for="empresas">Empresa:</label>
+            <select name="empresa">
+                <option name="empresa">Seleccionar</option>
+                {%if empresas %} {%for empresa in empresas%}
+                <option name="empresa">{{empresa.nombre}}</option>
+                {%endfor%} {%endif%}
+            </select>
+            <label style="font-size: 22px;" for="departamentos">Departamento:</label>
+            <select name="departamento">
+                <option name="departamento">Seleccionar</option>
+                {%if departamentos %} {%for departamento in departamentos%}
+                <option name="departamento">{{departamento.nombre}}</option>
+                {%endfor%} {%endif%}
+            </select>
             <input type="text" placeholder="Nombre,Empresa,Departamento" name="buscar">
             <div class="input-group-append">
                 <button style="border: 1px solid;border-color: black;" type="submit" class="btn btn-primary">

@@ -4,6 +4,8 @@ from django.http.response import HttpResponse
 from django.db.models import Q
 from apps.empleado.forms import EmpleadoForm
 from apps.empleado.models import Empleado
+from apps.departamento.models import Departamento
+from apps.empresa.models import Empresa
 from django.views.generic import ListView,CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 # Create your views here.
@@ -47,17 +49,27 @@ def elimina_empleados(request, id_empleado):
 
 def lista_empleado_view(request):
     empleado = Empleado.objects.all().order_by('nombre')
-    busqueda = request.GET.get('buscar')
-    if busqueda:
+    empresas = Empresa.objects.all().order_by('nombre')
+    departamentos = Departamento.objects.all().order_by('nombre')
+    nombre = request.GET.get('buscar')
+    emp = request.GET.get('empresa')
+    dep = request.GET.get('departamento')
+    if emp == 'Seleccionar':
+        emp = ''
+    if dep == 'Seleccionar':
+        dep = ''
+    if nombre == '' or nombre:
         empleado = Empleado.objects.filter(
-            Q(nombre__icontains = busqueda)|
-            Q(empresa__nombre__icontains = busqueda)|
-            Q(departamento__nombre__icontains = busqueda)
+            Q(nombre__icontains = nombre)&
+            Q(empresa__nombre__icontains = emp)&
+            Q(departamento__nombre__icontains = dep)
         ).distinct()
-        
-        contexto = {'empleados':empleado}
+        print("Hola")
+        print(nombre+"--"+emp+"--"+dep)
+        contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     else:
-        contexto = {'empleados':empleado}
+        print("Hola22")
+        contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     return render(request,'empleados/lista_empleados.html',contexto)
 
 
