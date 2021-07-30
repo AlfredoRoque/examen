@@ -22,19 +22,9 @@
             </a>
         </li>
     </ul>
-    <form method="GET">
-        <div class="input-group">
-            <input type="text" placeholder="Nombre,Empresa,Departamento" name="buscar">
-            <div class="input-group-append">
-                <button style="border: 1px solid;border-color: black;" type="submit" class="btn btn-primary">
-                    Busca
-                </button>
-            </div>
-        </div>
-    </form>
 </nav>
 {%endblock%} {%block content%}
-<a class="btn btn-danger" href="{% url 'registrar'%}">AGREGAR EMPLEADO</a>
+<a class="btn btn-danger" href="{% url 'registrar'%}">AGREGAR ADMINISTRADOR</a>
 <table class="table table-hover">
     <thead>
         <tr>

@@ -51,8 +51,8 @@ def lista_empleado_view(request):
     if busqueda:
         empleado = Empleado.objects.filter(
             Q(nombre__icontains = busqueda)|
-            Q(empresa = busqueda)|
-            Q(departamento = busqueda)
+            Q(empresa__nombre__icontains = busqueda)|
+            Q(departamento__nombre__icontains = busqueda)
         ).distinct()
         
         contexto = {'empleados':empleado}
