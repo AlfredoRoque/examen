@@ -1,24 +1,70 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary"> {% csrf_token %}
     <ul class="navbar-nav me-auto">
         <li class="nav-item">
+            {%if request.resolver_match.url_name == "lista_empleado" %}
+            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_empleado'%}">
+                EMPLEADOS
+            </a> {%else%}
             <a class="nav-link active" href="{% url 'lista_empleado'%}">
                 EMPLEADOS
-            </a>
+            </a> {%endif%}
         </li>
+        {%if user.is_staff %}
         <li class="nav-item">
+            {%if request.resolver_match.url_name == "lista_administrador" %}
+            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_administrador'%}">
+                ADMINISTRADORES
+            </a> {%else%}
             <a class="nav-link active" href="{% url 'lista_administrador'%}">
                 ADMINISTRADORES
-            </a>
+            </a> {%endif%}
         </li>
+        {%endif%}
         <li class="nav-item">
+            {%if request.resolver_match.url_name == "lista_empresa" %}
+            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_empresa'%}">
+                EMPRESAS
+            </a> {%else%}
             <a class="nav-link active" href="{% url 'lista_empresa'%}">
                 EMPRESAS
-            </a>
+            </a> {%endif%}
         </li>
         <li class="nav-item">
+            {%if request.resolver_match.url_name == "lista_departamento" %}
+            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_departamento'%}">
+                DEPARTAMENTO
+            </a> {%else%}
             <a class="nav-link active" href="{% url 'lista_departamento'%}">
                 DEPARTAMENTO
-                </a>
+            </a> {%endif%}
         </li>
     </ul>
+    {%if empresas %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+            <label style="font-size: 22px;margin-left: 20px;" for="empresas">Empresa:</label>
+            <select name="empresa">
+                <option name="empresa">Seleccionar</option>
+                {%if empresas %} {%for empresa in empresas%}
+                <option name="empresa">{{empresa.nombre}}</option>
+                {%endfor%} {%endif%}
+            </select>
+            <label style="font-size: 22px;margin-left: 20px;" for="departamentos">Departamento:</label>
+            <select name="departamento">
+                <option name="departamento">Seleccionar</option>
+                {%if departamentos %} {%for departamento in departamentos%}
+                <option name="departamento">{{departamento.nombre}}</option>
+                {%endfor%} {%endif%}
+            </select>
+            <input style="margin-left: 20px; " type="text" placeholder="Nombre,Empresa,Departamento" name="buscar">
+            <div class="input-group-append">
+                <button style="border: 1px solid;border-color: black;" type="submit" class="btn btn-primary">
+                    Busca
+                </button>
+            </div>
+        </div>
+    </form>
+    {%endif%}
+    <button style="margin-left: 20px; " class="btn btn-danger"><a style="text-decoration: none; color: white;" href="{% url 'logout'%}">Salir</a></button>
 </nav>

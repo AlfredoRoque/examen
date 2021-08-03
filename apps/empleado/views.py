@@ -51,9 +51,9 @@ def lista_empleado_view(request):
     empleado = Empleado.objects.all().order_by('nombre')
     empresas = Empresa.objects.all().order_by('nombre')
     departamentos = Departamento.objects.all().order_by('nombre')
-    nombre = request.GET.get('buscar')
-    emp = request.GET.get('empresa')
-    dep = request.GET.get('departamento')
+    nombre = request.POST.get('buscar')
+    emp = request.POST.get('empresa')
+    dep = request.POST.get('departamento')
     if emp == 'Seleccionar':
         emp = ''
     if dep == 'Seleccionar':
@@ -64,18 +64,10 @@ def lista_empleado_view(request):
             Q(empresa__nombre__icontains = emp)&
             Q(departamento__nombre__icontains = dep)
         ).distinct()
-        print("Hola")
-        print(nombre+"--"+emp+"--"+dep)
         contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     else:
-        print("Hola22")
         contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     return render(request,'empleados/lista_empleados.html',contexto)
-
-
-class EmpleadosList(ListView):
-    model = Empleado
-    template_name = 'empleados/lista_empleados.html'
 
 class EmpleadoCrear(CreateView):
     model = Empleado
