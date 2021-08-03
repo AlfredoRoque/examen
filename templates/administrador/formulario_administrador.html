@@ -1,6 +1,30 @@
 {% extends 'base/base.html' %} {%block header%} {%endblock%} {%block content%}
-<form method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit">Guardar</button>
+<form id="miformulario" class="form" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <div class="divform">
+            <div class="form-group row boton">
+                <label class="form-label mt-4" for="staff">Nombre de Usuario: </label> {{ form.username }}
+            </div>
+            <div class="form-group row boton">
+                <label class="form-label mt-4" for="is_staff">Es administrador global?</label> {{ form.is_staff}}
+            </div>
+            <div class="form-group row boton">
+                <label class="form-label mt-4" for="password1">Contraseña: </label> {{ form.password1 }}
+            </div>
+            <div class="form-group row boton">
+                <label class="form-label mt-4" for="password2">Confirmar la Contraseña: </label> {{ form.password2 }}
+            </div>
+            <div id="msg"></div>
+            <!-- Mensajes de Verificación -->
+            <div id="error" class="alert alert-danger ocultar" role="alert">
+                Las Contraseñas no coinciden, vuelve a intentar !
+            </div>
+            <div id="ok" class="alert alert-success ocultar" role="alert">
+                Las Contraseñas coinciden ! (Procesando formulario ... )
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Guardar</button>
+    </fieldset>
 </form>
 {%endblock%}

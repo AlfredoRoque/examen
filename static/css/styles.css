@@ -1,0 +1,24 @@
+body {
+    font-family: sans-serif;
+}
+
+.barra {
+    margin-bottom: 50px;
+}
+
+.form {
+    text-align: -webkit-center;
+}
+
+.divform {
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+.ocultar {
+    display: none;
+}
+
+.mostrar {
+    display: block;
+}

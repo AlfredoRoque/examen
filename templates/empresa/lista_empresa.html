@@ -1,5 +1,4 @@
 {% extends 'base/base.html' %}{%block content%} {% csrf_token %}
-<a class="btn btn-danger" href="{% url 'crear_empresa'%}">AGREGAR EMPRESA</a>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -28,4 +27,5 @@
         {%endif%}
     </tbody>
 </table>
-{%endblock%}
+<label for="icono">Agregar</label>
+<a name="icono" class="btn btn-danger" href="{% url 'crear_empresa'%}"><i class="fas fa-plus-circle"></i></a> {%endblock%}

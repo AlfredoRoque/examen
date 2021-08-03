@@ -7,3 +7,6 @@ class Departamento(models.Model):
     cod = models.CharField(max_length=10,primary_key=True)
     codigo = models.ForeignKey(Empresa, null=True,blank=True, on_delete=models.CASCADE)
     empresa = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.nombre

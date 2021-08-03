@@ -8,5 +8,5 @@ class Empresa(models.Model):
     descripcion = models.CharField(max_length=100)
     
 
-    def ___str___(self):
-        return '{}'.format(self.nombre)
+    def __str__(self):
+        return self.nombre

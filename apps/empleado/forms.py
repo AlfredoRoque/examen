@@ -36,10 +36,7 @@ class EmpleadoForm(forms.ModelForm):
             'empresa' : forms.Select(attrs={'required': True}),
             'departamento' : forms.Select(attrs={'required': True}),
             'correo' : forms.TextInput(attrs={'required': True}),
-            'sexo' : forms.SelectMultiple(choices = [
-        ("M", "Masculino"),
-        ("F", "Femenino"),
-        ]),
+            'sexo' : forms.Select(attrs={'required': True}),
             'telefono' : forms.TextInput(),
             'celular' : forms.TextInput(),
         }

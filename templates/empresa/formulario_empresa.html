@@ -1,6 +1,19 @@
 {% extends 'base/base.html' %} {%block content%}
-<form method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit">Guardar</button>
+<form class="form" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <div class="divform">
+            <div class="form-group row boton">
+                <label class="form-label mt-4" for="nombre">Nombre: </label> {{ form.nombre }}
+            </div>
+            <div class="form-group row boton">
+                <label class="form-label mt-4" for="codigo">Codigo: </label> {{ form.codigo }}
+            </div>
+            <div class="form-group row boton">
+                <label class="form-label mt-4" for="descripcion">Descripcion: </label> {{ form.descripcion }}
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Guardar</button>
+    </fieldset>
 </form>
 {%endblock%}

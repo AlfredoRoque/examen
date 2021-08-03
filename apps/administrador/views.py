@@ -16,7 +16,7 @@ class AdministradorList(ListView):
 class AdministradorCrear(CreateView):
     template_name = 'administrador/formulario_administrador.html'
     form_class = RegistroForm
-    success_url =reverse_lazy('lista_empleados.html')
+    success_url =reverse_lazy('lista_administrador')
 
 class AdministradorEditar(UpdateView):
     model = User

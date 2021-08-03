@@ -1,7 +1,7 @@
 /*
 PostgreSQL Backup
 Database: practica/public
-Backup Time: 2021-07-28 09:36:21
+Backup Time: 2021-08-03 17:15:46
 */
 
 DROP SEQUENCE IF EXISTS "public"."auth_group_id_seq";
@@ -13,6 +13,7 @@ DROP SEQUENCE IF EXISTS "public"."auth_user_user_permissions_id_seq";
 DROP SEQUENCE IF EXISTS "public"."django_admin_log_id_seq";
 DROP SEQUENCE IF EXISTS "public"."django_content_type_id_seq";
 DROP SEQUENCE IF EXISTS "public"."django_migrations_id_seq";
+DROP SEQUENCE IF EXISTS "public"."empleado_sexo_id_seq";
 DROP TABLE IF EXISTS "public"."administrador_administrador";
 DROP TABLE IF EXISTS "public"."auth_group";
 DROP TABLE IF EXISTS "public"."auth_group_permissions";
@@ -26,6 +27,7 @@ DROP TABLE IF EXISTS "public"."django_content_type";
 DROP TABLE IF EXISTS "public"."django_migrations";
 DROP TABLE IF EXISTS "public"."django_session";
 DROP TABLE IF EXISTS "public"."empleado_empleado";
+DROP TABLE IF EXISTS "public"."empleado_sexo";
 DROP TABLE IF EXISTS "public"."empresa_empresa";
 CREATE SEQUENCE "auth_group_id_seq" 
 INCREMENT 1
@@ -76,6 +78,12 @@ MAXVALUE 2147483647
 START 1
 CACHE 1;
 CREATE SEQUENCE "django_migrations_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+CREATE SEQUENCE "empleado_sexo_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -189,7 +197,7 @@ CREATE TABLE "empleado_empleado" (
   "empresa_id" varchar(10) COLLATE "pg_catalog"."default",
   "departamento_id" varchar(10) COLLATE "pg_catalog"."default",
   "correo" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "sexo" varchar(10) COLLATE "pg_catalog"."default" NOT NULL,
+  "sexo_id" int8 NOT NULL,
   "telefono" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "celular" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "fechaIngreso" date NOT NULL,
@@ -197,6 +205,12 @@ CREATE TABLE "empleado_empleado" (
 )
 ;
 ALTER TABLE "empleado_empleado" OWNER TO "postgres";
+CREATE TABLE "empleado_sexo" (
+  "id" int8 NOT NULL DEFAULT nextval('empleado_sexo_id_seq'::regclass),
+  "sexo" varchar(50) COLLATE "pg_catalog"."default" NOT NULL
+)
+;
+ALTER TABLE "empleado_sexo" OWNER TO "postgres";
 CREATE TABLE "empresa_empresa" (
   "nombre" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "codigo" varchar(10) COLLATE "pg_catalog"."default" NOT NULL,
@@ -219,12 +233,11 @@ COMMIT;
 BEGIN;
 LOCK TABLE "public"."auth_permission" IN SHARE MODE;
 DELETE FROM "public"."auth_permission";
-INSERT INTO "public"."auth_permission" ("id","name","content_type_id","codename") VALUES (1, 'Can add log entry', 1, 'add_logentry'),(2, 'Can change log entry', 1, 'change_logentry'),(3, 'Can delete log entry', 1, 'delete_logentry'),(4, 'Can view log entry', 1, 'view_logentry'),(5, 'Can add permission', 2, 'add_permission'),(6, 'Can change permission', 2, 'change_permission'),(7, 'Can delete permission', 2, 'delete_permission'),(8, 'Can view permission', 2, 'view_permission'),(9, 'Can add group', 3, 'add_group'),(10, 'Can change group', 3, 'change_group'),(11, 'Can delete group', 3, 'delete_group'),(12, 'Can view group', 3, 'view_group'),(13, 'Can add user', 4, 'add_user'),(14, 'Can change user', 4, 'change_user'),(15, 'Can delete user', 4, 'delete_user'),(16, 'Can view user', 4, 'view_user'),(17, 'Can add content type', 5, 'add_contenttype'),(18, 'Can change content type', 5, 'change_contenttype'),(19, 'Can delete content type', 5, 'delete_contenttype'),(20, 'Can view content type', 5, 'view_contenttype'),(21, 'Can add session', 6, 'add_session'),(22, 'Can change session', 6, 'change_session'),(23, 'Can delete session', 6, 'delete_session'),(24, 'Can view session', 6, 'view_session'),(25, 'Can add administrador', 7, 'add_administrador'),(26, 'Can change administrador', 7, 'change_administrador'),(27, 'Can delete administrador', 7, 'delete_administrador'),(28, 'Can view administrador', 7, 'view_administrador'),(29, 'Can add departamento', 8, 'add_departamento'),(30, 'Can change departamento', 8, 'change_departamento'),(31, 'Can delete departamento', 8, 'delete_departamento'),(32, 'Can view departamento', 8, 'view_departamento'),(33, 'Can add empleado', 9, 'add_empleado'),(34, 'Can change empleado', 9, 'change_empleado'),(35, 'Can delete empleado', 9, 'delete_empleado'),(36, 'Can view empleado', 9, 'view_empleado'),(37, 'Can add empresa', 10, 'add_empresa'),(38, 'Can change empresa', 10, 'change_empresa'),(39, 'Can delete empresa', 10, 'delete_empresa'),(40, 'Can view empresa', 10, 'view_empresa');
+INSERT INTO "public"."auth_permission" ("id","name","content_type_id","codename") VALUES (1, 'Can add log entry', 1, 'add_logentry'),(2, 'Can change log entry', 1, 'change_logentry'),(3, 'Can delete log entry', 1, 'delete_logentry'),(4, 'Can view log entry', 1, 'view_logentry'),(5, 'Can add permission', 2, 'add_permission'),(6, 'Can change permission', 2, 'change_permission'),(7, 'Can delete permission', 2, 'delete_permission'),(8, 'Can view permission', 2, 'view_permission'),(9, 'Can add group', 3, 'add_group'),(10, 'Can change group', 3, 'change_group'),(11, 'Can delete group', 3, 'delete_group'),(12, 'Can view group', 3, 'view_group'),(13, 'Can add user', 4, 'add_user'),(14, 'Can change user', 4, 'change_user'),(15, 'Can delete user', 4, 'delete_user'),(16, 'Can view user', 4, 'view_user'),(17, 'Can add content type', 5, 'add_contenttype'),(18, 'Can change content type', 5, 'change_contenttype'),(19, 'Can delete content type', 5, 'delete_contenttype'),(20, 'Can view content type', 5, 'view_contenttype'),(21, 'Can add session', 6, 'add_session'),(22, 'Can change session', 6, 'change_session'),(23, 'Can delete session', 6, 'delete_session'),(24, 'Can view session', 6, 'view_session'),(25, 'Can add administrador', 7, 'add_administrador'),(26, 'Can change administrador', 7, 'change_administrador'),(27, 'Can delete administrador', 7, 'delete_administrador'),(28, 'Can view administrador', 7, 'view_administrador'),(29, 'Can add departamento', 8, 'add_departamento'),(30, 'Can change departamento', 8, 'change_departamento'),(31, 'Can delete departamento', 8, 'delete_departamento'),(32, 'Can view departamento', 8, 'view_departamento'),(33, 'Can add empleado', 9, 'add_empleado'),(34, 'Can change empleado', 9, 'change_empleado'),(35, 'Can delete empleado', 9, 'delete_empleado'),(36, 'Can view empleado', 9, 'view_empleado'),(37, 'Can add empresa', 10, 'add_empresa'),(38, 'Can change empresa', 10, 'change_empresa'),(39, 'Can delete empresa', 10, 'delete_empresa'),(40, 'Can view empresa', 10, 'view_empresa'),(41, 'Can add sexo', 11, 'add_sexo'),(42, 'Can change sexo', 11, 'change_sexo'),(43, 'Can delete sexo', 11, 'delete_sexo'),(44, 'Can view sexo', 11, 'view_sexo');
 COMMIT;
 BEGIN;
 LOCK TABLE "public"."auth_user" IN SHARE MODE;
 DELETE FROM "public"."auth_user";
-INSERT INTO "public"."auth_user" ("id","password","last_login","is_superuser","username","first_name","last_name","email","is_staff","is_active","date_joined") VALUES (1, 'pbkdf2_sha256$260000$OI8nxqT0ZX2eaRx4epvBYK$xEcdPgU0CZwShSIDptSuoMfm3FEGW3U8rWSXmxyVU+E=', '2021-07-28 09:16:08.205028-05', 't', 'admin', '', '', 'alfredorokeromero@hotmail.com', 't', 't', '2021-07-27 16:55:59.893303-05');
 COMMIT;
 BEGIN;
 LOCK TABLE "public"."auth_user_groups" IN SHARE MODE;
@@ -245,21 +258,26 @@ COMMIT;
 BEGIN;
 LOCK TABLE "public"."django_content_type" IN SHARE MODE;
 DELETE FROM "public"."django_content_type";
-INSERT INTO "public"."django_content_type" ("id","app_label","model") VALUES (1, 'admin', 'logentry'),(2, 'auth', 'permission'),(3, 'auth', 'group'),(4, 'auth', 'user'),(5, 'contenttypes', 'contenttype'),(6, 'sessions', 'session'),(7, 'administrador', 'administrador'),(8, 'departamento', 'departamento'),(9, 'empleado', 'empleado'),(10, 'empresa', 'empresa');
+INSERT INTO "public"."django_content_type" ("id","app_label","model") VALUES (1, 'admin', 'logentry'),(2, 'auth', 'permission'),(3, 'auth', 'group'),(4, 'auth', 'user'),(5, 'contenttypes', 'contenttype'),(6, 'sessions', 'session'),(7, 'administrador', 'administrador'),(8, 'departamento', 'departamento'),(9, 'empleado', 'empleado'),(10, 'empresa', 'empresa'),(11, 'empleado', 'sexo');
 COMMIT;
 BEGIN;
 LOCK TABLE "public"."django_migrations" IN SHARE MODE;
 DELETE FROM "public"."django_migrations";
-INSERT INTO "public"."django_migrations" ("id","app","name","applied") VALUES (1, 'contenttypes', '0001_initial', '2021-07-27 16:48:03.043632-05'),(2, 'auth', '0001_initial', '2021-07-27 16:48:03.453664-05'),(3, 'admin', '0001_initial', '2021-07-27 16:48:03.659681-05'),(4, 'admin', '0002_logentry_remove_auto_add', '2021-07-27 16:48:03.684682-05'),(5, 'admin', '0003_logentry_add_action_flag_choices', '2021-07-27 16:48:03.706684-05'),(6, 'contenttypes', '0002_remove_content_type_name', '2021-07-27 16:48:03.765689-05'),(7, 'auth', '0002_alter_permission_name_max_length', '2021-07-27 16:48:03.790691-05'),(8, 'auth', '0003_alter_user_email_max_length', '2021-07-27 16:48:03.816694-05'),(9, 'auth', '0004_alter_user_username_opts', '2021-07-27 16:48:03.839695-05'),(10, 'auth', '0005_alter_user_last_login_null', '2021-07-27 16:48:03.865697-05'),(11, 'auth', '0006_require_contenttypes_0002', '2021-07-27 16:48:03.870696-05'),(12, 'auth', '0007_alter_validators_add_error_messages', '2021-07-27 16:48:03.8957-05'),(13, 'auth', '0008_alter_user_username_max_length', '2021-07-27 16:48:03.940702-05'),(14, 'auth', '0009_alter_user_last_name_max_length', '2021-07-27 16:48:03.961704-05'),(15, 'auth', '0010_alter_group_name_max_length', '2021-07-27 16:48:03.979705-05'),(16, 'auth', '0011_update_proxy_permissions', '2021-07-27 16:48:03.994706-05'),(17, 'auth', '0012_alter_user_first_name_max_length', '2021-07-27 16:48:04.011708-05'),(18, 'sessions', '0001_initial', '2021-07-27 16:48:04.038711-05'),(19, 'administrador', '0001_initial', '2021-07-27 18:02:57.621997-05'),(20, 'departamento', '0001_initial', '2021-07-27 18:02:57.651999-05'),(21, 'empleado', '0001_initial', '2021-07-27 18:02:57.675001-05'),(22, 'empresa', '0001_initial', '2021-07-27 18:02:57.702003-05'),(23, 'departamento', '0002_alter_departamento_empresa', '2021-07-27 18:20:30.532845-05'),(24, 'departamento', '0003_delete_departamento', '2021-07-27 18:27:19.683135-05'),(25, 'departamento', '0004_departamento', '2021-07-27 18:29:21.649984-05'),(26, 'departamento', '0005_remove_departamento_telefono', '2021-07-27 18:37:10.758024-05'),(27, 'empleado', '0002_auto_20210727_1841', '2021-07-27 18:41:33.68208-05'),(28, 'administrador', '0002_administrador_password', '2021-07-28 06:01:26.501872-05'),(29, 'empleado', '0003_auto_20210728_0600', '2021-07-28 06:01:26.647884-05');
+INSERT INTO "public"."django_migrations" ("id","app","name","applied") VALUES (1, 'contenttypes', '0001_initial', '2021-07-27 16:48:03.043632-05'),(2, 'auth', '0001_initial', '2021-07-27 16:48:03.453664-05'),(3, 'admin', '0001_initial', '2021-07-27 16:48:03.659681-05'),(4, 'admin', '0002_logentry_remove_auto_add', '2021-07-27 16:48:03.684682-05'),(5, 'admin', '0003_logentry_add_action_flag_choices', '2021-07-27 16:48:03.706684-05'),(6, 'contenttypes', '0002_remove_content_type_name', '2021-07-27 16:48:03.765689-05'),(7, 'auth', '0002_alter_permission_name_max_length', '2021-07-27 16:48:03.790691-05'),(8, 'auth', '0003_alter_user_email_max_length', '2021-07-27 16:48:03.816694-05'),(9, 'auth', '0004_alter_user_username_opts', '2021-07-27 16:48:03.839695-05'),(10, 'auth', '0005_alter_user_last_login_null', '2021-07-27 16:48:03.865697-05'),(11, 'auth', '0006_require_contenttypes_0002', '2021-07-27 16:48:03.870696-05'),(12, 'auth', '0007_alter_validators_add_error_messages', '2021-07-27 16:48:03.8957-05'),(13, 'auth', '0008_alter_user_username_max_length', '2021-07-27 16:48:03.940702-05'),(14, 'auth', '0009_alter_user_last_name_max_length', '2021-07-27 16:48:03.961704-05'),(15, 'auth', '0010_alter_group_name_max_length', '2021-07-27 16:48:03.979705-05'),(16, 'auth', '0011_update_proxy_permissions', '2021-07-27 16:48:03.994706-05'),(17, 'auth', '0012_alter_user_first_name_max_length', '2021-07-27 16:48:04.011708-05'),(18, 'sessions', '0001_initial', '2021-07-27 16:48:04.038711-05'),(19, 'administrador', '0001_initial', '2021-07-27 18:02:57.621997-05'),(20, 'departamento', '0001_initial', '2021-07-27 18:02:57.651999-05'),(21, 'empleado', '0001_initial', '2021-07-27 18:02:57.675001-05'),(22, 'empresa', '0001_initial', '2021-07-27 18:02:57.702003-05'),(23, 'departamento', '0002_alter_departamento_empresa', '2021-07-27 18:20:30.532845-05'),(24, 'departamento', '0003_delete_departamento', '2021-07-27 18:27:19.683135-05'),(25, 'departamento', '0004_departamento', '2021-07-27 18:29:21.649984-05'),(26, 'departamento', '0005_remove_departamento_telefono', '2021-07-27 18:37:10.758024-05'),(27, 'empleado', '0002_auto_20210727_1841', '2021-07-27 18:41:33.68208-05'),(28, 'administrador', '0002_administrador_password', '2021-07-28 06:01:26.501872-05'),(29, 'empleado', '0003_auto_20210728_0600', '2021-07-28 06:01:26.647884-05'),(30, 'empleado', '0004_auto_20210803_1512', '2021-08-03 15:14:14.982896-05'),(31, 'empleado', '0005_auto_20210803_1515', '2021-08-03 15:15:53.383869-05');
 COMMIT;
 BEGIN;
 LOCK TABLE "public"."django_session" IN SHARE MODE;
 DELETE FROM "public"."django_session";
-INSERT INTO "public"."django_session" ("session_key","session_data","expire_date") VALUES ('106qq8ulgfz6l9s31cgxex8ktrwnag4j', 'e30:1m8hUs:vRZA1RS4M0tCfUHFQRIXSZpgTKY4eFKAtAZVxSzSTK0', '2021-08-11 06:13:10.407212-05'),('vwet3s87y20ppl1uue3erj6mp1b4l391', 'e30:1m8hYI:_anGTbA_ug0528WpbZ9gg9MT1PuM22VMaqBTOm4kFnM', '2021-08-11 06:16:42.23316-05'),('9c1tx3v4ga7qmkwal8cppcx4glkgrpxz', 'e30:1m8hcE:JQ4Gh9_a1SXzExVi_Ikd-BhC20533hzhK5_cloLhvj8', '2021-08-11 06:20:46.529705-05'),('o3muczrg7joakcjtai4o2otd366lrnjk', '.eJxVjDEOwjAMRe-SGUW4NsVhZOcMkeMkpIBSqWknxN1RpA6w_vfefxsv21r81tLip2guBszhdwuiz1Q7iA-p99nqXNdlCrYrdqfN3uaYXtfd_Tso0kqvo47ZjcocsgpmBwzABFndkYjVCQfWyAMFIjgTYhrEaUCMJ-GE5vMF9sA4FA:1m8kLw:M7jFCrAf0AleOjp6D21384db1xnERsMQJSnlDZXDpPw', '2021-08-11 09:16:08.227029-05');
+INSERT INTO "public"."django_session" ("session_key","session_data","expire_date") VALUES ('106qq8ulgfz6l9s31cgxex8ktrwnag4j', 'e30:1m8hUs:vRZA1RS4M0tCfUHFQRIXSZpgTKY4eFKAtAZVxSzSTK0', '2021-08-11 06:13:10.407212-05'),('vwet3s87y20ppl1uue3erj6mp1b4l391', 'e30:1m8hYI:_anGTbA_ug0528WpbZ9gg9MT1PuM22VMaqBTOm4kFnM', '2021-08-11 06:16:42.23316-05'),('9c1tx3v4ga7qmkwal8cppcx4glkgrpxz', 'e30:1m8hcE:JQ4Gh9_a1SXzExVi_Ikd-BhC20533hzhK5_cloLhvj8', '2021-08-11 06:20:46.529705-05'),('2b7dg5ndesphq5vyhgyq0xa14742kmwn', '.eJxVjMsOwiAQRf-FtSEODAxx6d5vIDwGqRpISrtq_Hdt0oVu7znnbsKHdal-HTz7KYuLABKn3zGG9OS2k_wI7d5l6m2Zpyh3RR50yFvP_Loe7t9BDaN-a0QEpRHQWYbAmUJk7YC4ILAlTBoIi2NnDRKbwvkctQKrCupoFIj3B-t7N0g:1mB2gX:4CUBEvj5IQp90KxSd7IiAHsuDy50DPrYJf2AApO4qos', '2021-08-17 17:14:53.276553-05');
 COMMIT;
 BEGIN;
 LOCK TABLE "public"."empleado_empleado" IN SHARE MODE;
 DELETE FROM "public"."empleado_empleado";
+COMMIT;
+BEGIN;
+LOCK TABLE "public"."empleado_sexo" IN SHARE MODE;
+DELETE FROM "public"."empleado_sexo";
+INSERT INTO "public"."empleado_sexo" ("id","sexo") VALUES (1, 'MASCULINO'),(2, 'FEMENINO');
 COMMIT;
 BEGIN;
 LOCK TABLE "public"."empresa_empresa" IN SHARE MODE;
@@ -344,6 +362,10 @@ CREATE INDEX "empleado_empleado_empresa_id_066655bc" ON "empleado_empleado" USIN
 CREATE INDEX "empleado_empleado_empresa_id_066655bc_like" ON "empleado_empleado" USING btree (
   "empresa_id" COLLATE "pg_catalog"."default" "pg_catalog"."varchar_pattern_ops" ASC NULLS LAST
 );
+CREATE INDEX "empleado_empleado_sexo_id_16be0648" ON "empleado_empleado" USING btree (
+  "sexo_id" "pg_catalog"."int8_ops" ASC NULLS LAST
+);
+ALTER TABLE "empleado_sexo" ADD CONSTRAINT "empleado_sexo_pkey" PRIMARY KEY ("id");
 ALTER TABLE "empresa_empresa" ADD CONSTRAINT "empresa_empresa_pkey" PRIMARY KEY ("codigo");
 CREATE INDEX "empresa_empresa_codigo_099bc8a9_like" ON "empresa_empresa" USING btree (
   "codigo" COLLATE "pg_catalog"."default" "pg_catalog"."varchar_pattern_ops" ASC NULLS LAST
@@ -368,6 +390,7 @@ ALTER TABLE "django_admin_log" ADD CONSTRAINT "django_admin_log_user_id_c564eba6
 ALTER TABLE "django_content_type" ADD CONSTRAINT "django_content_type_app_label_model_76bd3d3b_uniq" UNIQUE ("app_label", "model");
 ALTER TABLE "empleado_empleado" ADD CONSTRAINT "empleado_empleado_departamento_id_906535e4_fk_departame" FOREIGN KEY ("departamento_id") REFERENCES "public"."departamento_departamento" ("cod") ON DELETE NO ACTION ON UPDATE NO ACTION DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE "empleado_empleado" ADD CONSTRAINT "empleado_empleado_empresa_id_066655bc_fk_empresa_empresa_codigo" FOREIGN KEY ("empresa_id") REFERENCES "public"."empresa_empresa" ("codigo") ON DELETE NO ACTION ON UPDATE NO ACTION DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "empleado_empleado" ADD CONSTRAINT "empleado_empleado_sexo_id_16be0648_fk_empleado_sexo_id" FOREIGN KEY ("sexo_id") REFERENCES "public"."empleado_sexo" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION DEFERRABLE INITIALLY DEFERRED;
 ALTER SEQUENCE "auth_group_id_seq"
 OWNED BY "auth_group"."id";
 SELECT setval('"auth_group_id_seq"', 2, false);
@@ -378,7 +401,7 @@ SELECT setval('"auth_group_permissions_id_seq"', 2, false);
 ALTER SEQUENCE "auth_group_permissions_id_seq" OWNER TO "postgres";
 ALTER SEQUENCE "auth_permission_id_seq"
 OWNED BY "auth_permission"."id";
-SELECT setval('"auth_permission_id_seq"', 41, true);
+SELECT setval('"auth_permission_id_seq"', 45, true);
 ALTER SEQUENCE "auth_permission_id_seq" OWNER TO "postgres";
 ALTER SEQUENCE "auth_user_groups_id_seq"
 OWNED BY "auth_user_groups"."id";
@@ -386,7 +409,7 @@ SELECT setval('"auth_user_groups_id_seq"', 2, false);
 ALTER SEQUENCE "auth_user_groups_id_seq" OWNER TO "postgres";
 ALTER SEQUENCE "auth_user_id_seq"
 OWNED BY "auth_user"."id";
-SELECT setval('"auth_user_id_seq"', 9, true);
+SELECT setval('"auth_user_id_seq"', 18, true);
 ALTER SEQUENCE "auth_user_id_seq" OWNER TO "postgres";
 ALTER SEQUENCE "auth_user_user_permissions_id_seq"
 OWNED BY "auth_user_user_permissions"."id";
@@ -398,9 +421,13 @@ SELECT setval('"django_admin_log_id_seq"', 2, false);
 ALTER SEQUENCE "django_admin_log_id_seq" OWNER TO "postgres";
 ALTER SEQUENCE "django_content_type_id_seq"
 OWNED BY "django_content_type"."id";
-SELECT setval('"django_content_type_id_seq"', 11, true);
+SELECT setval('"django_content_type_id_seq"', 12, true);
 ALTER SEQUENCE "django_content_type_id_seq" OWNER TO "postgres";
 ALTER SEQUENCE "django_migrations_id_seq"
 OWNED BY "django_migrations"."id";
-SELECT setval('"django_migrations_id_seq"', 30, true);
+SELECT setval('"django_migrations_id_seq"', 32, true);
 ALTER SEQUENCE "django_migrations_id_seq" OWNER TO "postgres";
+ALTER SEQUENCE "empleado_sexo_id_seq"
+OWNED BY "empleado_sexo"."id";
+SELECT setval('"empleado_sexo_id_seq"', 3, true);
+ALTER SEQUENCE "empleado_sexo_id_seq" OWNER TO "postgres";
