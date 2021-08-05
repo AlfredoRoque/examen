@@ -1,70 +1,148 @@
-<nav class="barra navbar navbar-expand-lg navbar-dark bg-primary"> {% csrf_token %}
-    <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-            {%if request.resolver_match.url_name == "lista_empleado" %}
-            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_empleado'%}">
-                EMPLEADOS
-            </a> {%else%}
-            <a class="nav-link active" href="{% url 'lista_empleado'%}">
-                EMPLEADOS
-            </a> {%endif%}
-        </li>
-        {%if user.is_staff %}
-        <li class="nav-item">
-            {%if request.resolver_match.url_name == "lista_administrador" %}
-            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_administrador'%}">
-                ADMINISTRADORES
-            </a> {%else%}
-            <a class="nav-link active" href="{% url 'lista_administrador'%}">
-                ADMINISTRADORES
-            </a> {%endif%}
-        </li>
-        {%endif%}
-        <li class="nav-item">
-            {%if request.resolver_match.url_name == "lista_empresa" %}
-            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_empresa'%}">
-                EMPRESAS
-            </a> {%else%}
-            <a class="nav-link active" href="{% url 'lista_empresa'%}">
-                EMPRESAS
-            </a> {%endif%}
-        </li>
-        <li class="nav-item">
-            {%if request.resolver_match.url_name == "lista_departamento" %}
-            <a style="background-color: #222222;" class="nav-link active" href="{% url 'lista_departamento'%}">
-                DEPARTAMENTO
-            </a> {%else%}
-            <a class="nav-link active" href="{% url 'lista_departamento'%}">
-                DEPARTAMENTO
-            </a> {%endif%}
-        </li>
-    </ul>
-    {%if empresas %}
-    <form method="POST">
-        {% csrf_token %}
-        <div class="input-group">
-            <label style="font-size: 22px;margin-left: 20px;" for="empresas">Empresa:</label>
-            <select name="empresa">
-                <option name="empresa">Seleccionar</option>
-                {%if empresas %} {%for empresa in empresas%}
-                <option name="empresa">{{empresa.nombre}}</option>
-                {%endfor%} {%endif%}
-            </select>
-            <label style="font-size: 22px;margin-left: 20px;" for="departamentos">Departamento:</label>
-            <select name="departamento">
-                <option name="departamento">Seleccionar</option>
-                {%if departamentos %} {%for departamento in departamentos%}
-                <option name="departamento">{{departamento.nombre}}</option>
-                {%endfor%} {%endif%}
-            </select>
-            <input style="margin-left: 20px; " type="text" placeholder="Nombre,Empresa,Departamento" name="buscar">
-            <div class="input-group-append">
-                <button style="border: 1px solid;border-color: black;" type="submit" class="btn btn-primary">
-                    Busca
-                </button>
+<div class="page-wrapper chiller-theme">
+    {% csrf_token %}
+    <nav class="barra navbar navbar-expand-lg navbar-dark bg-primary">
+        <h1>HOME</h1>
+        {%if empresas %}
+        <form class="form-busqueda" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label style="font-size: 22px;margin-left: 20px;" for="empresas">Empresa:</label>
+                <select name="empresa">
+                    <option name="empresa">Seleccionar</option>
+                    {%if empresas %} {%for empresa in empresas%}
+                    <option name="empresa">{{empresa.nombre}}</option>
+                    {%endfor%} {%endif%}
+                </select>
+                <label style="font-size: 22px;margin-left: 20px;" for="departamentos">Departamento:</label>
+                <select name="departamento">
+                    <option name="departamento">Seleccionar</option>
+                    {%if departamentos %} {%for departamento in departamentos%}
+                    <option name="departamento">{{departamento.nombre}}</option>
+                    {%endfor%} {%endif%}
+                </select>
+                <input style="margin-left: 20px; " type="text" placeholder="Nombre,Empresa,Departamento" name="buscar">
+                <div class="input-group-append">
+                    <button style="border: 1px solid;border-color: black;" type="submit" class="btn btn-primary">
+                        Busca
+                    </button>
+                </div>
             </div>
+        </form>
+        {%endif%}
+        <button style="margin-left: auto; " class="btn btn-danger"><a style="text-decoration: none; color: white;" href="{% url 'logout'%}">Salir</a></button>
+    </nav>
+
+
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content">
+            <div class="sidebar-brand">
+                <a style="pointer-events: none;" href="#">MENU</a>
+                <div id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="sidebar-header">
+                <div class="user-pic">
+                    <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" alt="User picture">
+                </div>
+                <div class="user-info">
+                    <span class="user-name">{{user.username}}
+            </span> {%if user.is_staff %}
+                    <span class="user-role">Administrator</span> {%else%}
+                    <span class="user-role">Usuario</span> {%endif%}
+                    <span class="user-status">
+              <i class="fa fa-circle"></i>
+              <span>Online</span>
+                    </span>
+                </div>
+            </div>
+            <!-- sidebar-header  -->
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="header-menu">
+                        <span>General</span>
+                    </li>
+                    {%if user.is_staff %} {%if request.resolver_match.url_name == "lista_administrador" %}
+                    <li style="background-color: #222222;" class="sidebar-dropdown">
+                        <a href="{% url 'lista_administrador'%}">
+                            <i class="fa fa-tachometer-alt"></i>
+                            <span>Administradores</span>
+                        </a>
+                    </li>
+                    {%else%}
+                    <li class="sidebar-dropdown">
+                        <a href="{% url 'lista_administrador'%}">
+                            <i class="fa fa-tachometer-alt"></i>
+                            <span>Administradores</span>
+                        </a>
+                    </li>
+                    {%endif%} {%endif%} {%if request.resolver_match.url_name == "lista_empleado" %}
+                    <li style="background-color: #222222;" class="sidebar-dropdown">
+                        <a href="{% url 'lista_empleado'%}">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>Empleados</span>
+                        </a>
+                    </li>
+                    {%else%}
+                    <li class="sidebar-dropdown">
+                        <a href="{% url 'lista_empleado'%}">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>Empleados</span>
+                        </a>
+                    </li>
+                    {%endif%} {%if request.resolver_match.url_name == "lista_empresa" %}
+                    <li style="background-color: #222222;" class="sidebar-dropdown">
+                        <a href="{% url 'lista_empresa'%}">
+                            <i class="far fa-gem"></i>
+                            <span>Empresas</span>
+                        </a>
+                    </li>
+                    {%else%}
+                    <li class="sidebar-dropdown">
+                        <a href="{% url 'lista_empresa'%}">
+                            <i class="far fa-gem"></i>
+                            <span>Empresas</span>
+                        </a>
+                    </li>
+                    {%endif%} {%if request.resolver_match.url_name == "lista_departamento" %}
+                    <li style="background-color: #222222;" class="sidebar-dropdown">
+                        <a href="{% url 'lista_departamento'%}">
+                            <i class="fa fa-chart-line"></i>
+                            <span>Departamentos</span>
+                        </a>
+                    </li>
+                    {%else%}
+                    <li class="sidebar-dropdown">
+                        <a href="{% url 'lista_departamento'%}">
+                            <i class="fa fa-chart-line"></i>
+                            <span>Departamentos</span>
+                        </a>
+                    </li>
+                    {%endif%}
+                </ul>
+            </div>
+            <!-- sidebar-menu  -->
         </div>
-    </form>
-    {%endif%}
-    <button style="margin-left: 20px; " class="btn btn-danger"><a style="text-decoration: none; color: white;" href="{% url 'logout'%}">Salir</a></button>
-</nav>
+        <!-- sidebar-content  -->
+        <!--<div class="sidebar-footer">
+            <a href="#">
+                <i class="fa fa-bell"></i>
+                <span class="badge badge-pill badge-warning notification">3</span>
+            </a>
+            <a href="#">
+                <i class="fa fa-envelope"></i>
+                <span class="badge badge-pill badge-success notification">7</span>
+            </a>
+            <a href="#">
+                <i class="fa fa-cog"></i>
+                <span class="badge-sonar"></span>
+            </a>
+            <a href="#">
+                <i class="fa fa-power-off"></i>
+            </a>
+        </div>-->
+    </nav>
+    <a id="show-sidebar" class="sub-m btn btn-sm" href="#">
+        <i class="fas fa-bars"></i>
+    </a>
+    <!-- page-wrapper -->

@@ -1,49 +1,52 @@
 {% extends 'base/base.html' %} {%block content%} {% csrf_token %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Fecha de Nacimiento</th>
-            <th scope="col">Curp</th>
-            <th scope="col">Empresa</th>
-            <th scope="col">Departamento</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Genero</th>
-            <th scope="col">Telefono</th>
-            <th scope="col">Celular</th>
-            <th scope="col">Fecha de Ingreso</th>
-            <th scope="col">Modificar</th>
-            <th scope="col">Eliminar</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%if empleados %} {%for empleado in empleados%}
-        <tr class="table-primary">
-            <td>{{empleado.nombre}}</td>
-            <td>{{empleado.fechaNacimiento}}</td>
-            <td>{{empleado.curp}}</td>
-            <td>{{empleado.empresa.nombre}}</td>
-            <td>{{empleado.departamento.nombre}}</td>
-            <td>{{empleado.correo}}</td>
-            {%if empleado.sexo == "['M']"%}
-            <td>Masculino</td>
-            {%else%}
-            <td>Femenino</td>
+<div id="tabla" class="tablaComp">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha de Nacimiento</th>
+                <th scope="col">Curp</th>
+                <th scope="col">Empresa</th>
+                <th scope="col">Departamento</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Genero</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Celular</th>
+                <th scope="col">Fecha de Ingreso</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%if empleados %} {%for empleado in empleados%}
+            <tr class="table-primary">
+                <td>{{empleado.nombre}}</td>
+                <td>{{empleado.fechaNacimiento}}</td>
+                <td>{{empleado.curp}}</td>
+                <td>{{empleado.empresa.nombre}}</td>
+                <td>{{empleado.departamento.nombre}}</td>
+                <td>{{empleado.correo}}</td>
+                {%if empleado.sexo == "['M']"%}
+                <td>Masculino</td>
+                {%else%}
+                <td>Femenino</td>
+                {%endif%}
+                <td>{{empleado.telefono}}</td>
+                <td>{{empleado.celular}}</td>
+                <td>{{empleado.fechaIngreso}}</td>
+                <td>
+                    <a class="btn btn-primary" href="{% url 'modifica_empleado' empleado.curp %}">EDITAR</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" href="{% url 'elimina_empleado' empleado.curp %}">ELIMINAR</a>
+                </td>
+            </tr>
+            {%endfor%} {%else%}
+            <h3>Buscar Empleados</h3>
             {%endif%}
-            <td>{{empleado.telefono}}</td>
-            <td>{{empleado.celular}}</td>
-            <td>{{empleado.fechaIngreso}}</td>
-            <td>
-                <a class="btn btn-primary" href="{% url 'modifica_empleado' empleado.curp %}">EDITAR</a>
-            </td>
-            <td>
-                <a class="btn btn-danger" href="{% url 'elimina_empleado' empleado.curp %}">ELIMINAR</a>
-            </td>
-        </tr>
-        {%endfor%} {%else%}
-        <h1>No hay Registros</h1>
-        {%endif%}
-    </tbody>
-</table>
-<label for="icono">Agregar</label>
-<a name="icono" class="btn btn-danger" href="{% url 'crear_empleado'%}"><i class="fas fa-plus-circle"></i></a> {%endblock%}
+        </tbody>
+    </table>
+    <label for="icono">Agregar</label>
+    <a name="icono" class="btn btn-danger" href="{% url 'crear_empleado'%}"><i class="fas fa-plus-circle"></i></a>
+</div>
+{% include 'base/headerFin.html' %} {%endblock%}

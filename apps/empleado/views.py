@@ -48,7 +48,7 @@ def elimina_empleados(request, id_empleado):
 '''
 
 def lista_empleado_view(request):
-    empleado = Empleado.objects.all().order_by('nombre')
+    empleado = any
     empresas = Empresa.objects.all().order_by('nombre')
     departamentos = Departamento.objects.all().order_by('nombre')
     nombre = request.POST.get('buscar')
@@ -58,14 +58,33 @@ def lista_empleado_view(request):
         emp = ''
     if dep == 'Seleccionar':
         dep = ''
-    if nombre == '' or nombre:
-        empleado = Empleado.objects.filter(
+    if nombre:
+        if(emp == '' and dep == ''):
+            empleado = Empleado.objects.filter(
+            Q(nombre__icontains = nombre)
+            ).distinct()
+        elif(emp != '' and dep == ''):
+            empleado = Empleado.objects.filter(
             Q(nombre__icontains = nombre)&
-            Q(empresa__nombre__icontains = emp)&
-            Q(departamento__nombre__icontains = dep)
-        ).distinct()
+            Q(empresa__nombre = emp)
+            ).distinct()
+        elif(dep != '' and emp == ''):
+            empleado = Empleado.objects.filter(
+            Q(nombre__icontains = nombre)&
+            Q(departamento__nombre = dep)
+            ).distinct()
+        elif(dep != '' and emp != ''):
+            empleado = Empleado.objects.filter(
+            Q(nombre__icontains = nombre)&
+            Q(empresa__nombre = emp)&
+            Q(departamento__nombre = dep)
+            ).distinct()
         contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     else:
+        empleado = Empleado.objects.filter(
+            Q(empresa__nombre = emp)|
+            Q(departamento__nombre = dep)
+        ).distinct()
         contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     return render(request,'empleados/lista_empleados.html',contexto)
 

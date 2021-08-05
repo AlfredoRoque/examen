@@ -1,29 +1,32 @@
 {% extends 'base/base.html' %} {%block content%} {% csrf_token %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Fecha de Alta</th>
-            <th scope="col">Modificar</th>
-            <th scope="col">Eliminar</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%if object_list %} {%for administrador in object_list%}
-        <tr class="table-primary">
-            <td>{{administrador.username}}</td>
-            <td>{{administrador.date_joined}}</td>
-            <td>
-                <a class="btn btn-primary" href="{% url 'modifica_administrador' administrador.id %}">EDITAR</a>
-            </td>
-            <td>
-                <a class="btn btn-danger" href="{% url 'elimina_administrador' administrador.id %}">ELIMINAR</a>
-            </td>
-        </tr>
-        {%endfor%} {%else%}
-        <h1>No hay Registros</h1>
-        {%endif%}
-    </tbody>
-</table>
-<label for="icono">Agregar</label>
-<a name="icono" class="btn btn-danger" href="{% url 'registrar'%}"><i class="fas fa-plus-circle"></i></a> {%endblock%}
+<div id="tabla" class="tablaComp">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha de Alta</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%if object_list %} {%for administrador in object_list%}
+            <tr class="table-primary">
+                <td>{{administrador.username}}</td>
+                <td>{{administrador.date_joined}}</td>
+                <td>
+                    <a class="btn btn-primary" href="{% url 'modifica_administrador' administrador.id %}">EDITAR</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" href="{% url 'elimina_administrador' administrador.id %}">ELIMINAR</a>
+                </td>
+            </tr>
+            {%endfor%} {%else%}
+            <h3>No hay administradores Registrados</h3>
+            {%endif%}
+        </tbody>
+    </table>
+    <label for="icono">Agregar</label>
+    <a name="icono" class="btn btn-danger" href="{% url 'registrar'%}"><i class="fas fa-plus-circle"></i></a>
+</div>
+{% include 'base/headerFin.html' %} {%endblock%}

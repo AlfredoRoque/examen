@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %} {%block content%}
+{% extends 'base/base.html' %} {%block header%} {%endblock %}{%block content%}
 <form method="POST">
     {% csrf_token %}
     <h3>Desea eliminar el Registro de {{ object.username }}?</h3>
