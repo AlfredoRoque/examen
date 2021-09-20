@@ -1,0 +1,32 @@
+ {%if request.resolver_match.url_name == "lista_administrador" %} {%endif%}
+<div class="header-login chiller-theme">
+    <nav class="barra navbar navbar-expand-lg navbar-dark bg-primary">
+        {%if request.resolver_match.url_name == "registrar" %}
+        <h2 class="title-login">Registrate </h2>
+        {%elif request.resolver_match.url_name == None %}
+        <h2 class="title-login">Inicia Sesion </h2>
+        {%elif request.resolver_match.url_name == "crear_empleado" %}
+        <h2 class="title-login">Información de Empleado </h2>
+        {%elif request.resolver_match.url_name == "crear_empresa" %}
+        <h2 class="title-login">Información de la Empresa </h2>
+        {%elif request.resolver_match.url_name == "crear_departamento" %}
+        <h2 class="title-login">Información del Departamento </h2>
+        {%elif request.resolver_match.url_name == "modifica_departamento" %}
+        <h2 class="title-login">Información del Departamento </h2>
+        {%elif request.resolver_match.url_name == "modifica_empleado" %}
+        <h2 class="title-login">Información del Empleado </h2>
+        {%elif request.resolver_match.url_name == "modifica_empresa" %}
+        <h2 class="title-login">Información de la Empresa </h2>
+        {%elif request.resolver_match.url_name == "modifica_administrador" %}
+        <h2 class="title-login">Información del Administrador </h2>
+        {%elif request.resolver_match.url_name == "elimina_administrador" %}
+        <h2 class="title-login">Eliminando Administrador </h2>
+        {%elif request.resolver_match.url_name == "elimina_empleado" %}
+        <h2 class="title-login">Eliminando Empleado </h2>
+        {%elif request.resolver_match.url_name == "elimina_empresa" %}
+        <h2 class="title-login">Eliminando Empresa </h2>
+        {%elif request.resolver_match.url_name == "elimina_departamento" %}
+        <h2 class="title-login">Eliminando Depsrtamento </h2>
+        {%endif%}
+    </nav>
+</div>

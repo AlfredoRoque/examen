@@ -1,5 +1,6 @@
 body {
     font-family: sans-serif;
+    background-color: #31353D!important;
 }
 
 .form-busqueda {
@@ -20,6 +21,14 @@ body {
     margin-left: 0px;
 }
 
+.title-login {
+    margin: auto;
+}
+
+.header-login {
+    height: 1px;
+}
+
 .sub-m {
     z-index: 1;
     background-color: #375a7f!important;
@@ -32,13 +41,37 @@ body {
     z-index: 1;
 }
 
+.mensaje {
+    margin: 8px 0px 0px 0px;
+    padding: 2px 0px 2px 0px;
+}
+
 .form {
     text-align: -webkit-center;
+    margin-top: 120px;
+}
+
+.div-login {
+    margin-top: 120px;
+}
+
+.boton-reg {
+    border-radius: 5px;
 }
 
 .divform {
     width: 30%;
     margin-bottom: 20px;
+}
+
+.elements-login {
+    float: right;
+}
+
+.form-login {
+    margin-bottom: 20px;
+    width: 24%;
+    text-align: initial;
 }
 
 .ocultar {
@@ -47,6 +80,28 @@ body {
 
 .mostrar {
     display: block;
+}
+
+table tr th {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.sorting {
+    background-color: #D4D4D4;
+}
+
+.asc:after {
+    box-sizing: border-box;
+    content: ' ↑';
+}
+
+.desc:after {
+    box-sizing: border-box;
+    content: " ↓";
 }
 
 @keyframes swing {
@@ -118,6 +173,9 @@ body {
 #sidebar {
     top: 80px;
     position: fixed;
+    border: solid;
+    border-color: #222;
+    border-width: 1px;
 }
 
 .page-wrapper {

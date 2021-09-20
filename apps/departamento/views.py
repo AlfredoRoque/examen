@@ -30,4 +30,11 @@ class DepartamentoEliminar(DeleteView):
     model = Departamento
     form_class = DepartamentoForm
     template_name = 'departamento/departamento_eliminar.html'
-    success_url =reverse_lazy('lista_departamento')
+
+    def post(self, request,pk ,*args, **kwargs):
+        object = Departamento.objects.get(cod = pk)
+        object.delete()
+        eliminado = True
+        contexto = {'success': eliminado}
+        request.session['contexto'] = eliminado
+        return redirect('lista_departamento')

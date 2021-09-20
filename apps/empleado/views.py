@@ -62,29 +62,29 @@ def lista_empleado_view(request):
         if(emp == '' and dep == ''):
             empleado = Empleado.objects.filter(
             Q(nombre__icontains = nombre)
-            ).distinct()
+            ).distinct().order_by('fechaIngreso')
         elif(emp != '' and dep == ''):
             empleado = Empleado.objects.filter(
             Q(nombre__icontains = nombre)&
             Q(empresa__nombre = emp)
-            ).distinct()
+            ).distinct().order_by('fechaIngreso')
         elif(dep != '' and emp == ''):
             empleado = Empleado.objects.filter(
             Q(nombre__icontains = nombre)&
             Q(departamento__nombre = dep)
-            ).distinct()
+            ).distinct().order_by('fechaIngreso')
         elif(dep != '' and emp != ''):
             empleado = Empleado.objects.filter(
             Q(nombre__icontains = nombre)&
             Q(empresa__nombre = emp)&
             Q(departamento__nombre = dep)
-            ).distinct()
+            ).distinct().order_by('fechaIngreso')
         contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     else:
         empleado = Empleado.objects.filter(
             Q(empresa__nombre = emp)|
             Q(departamento__nombre = dep)
-        ).distinct()
+        ).distinct().order_by('fechaIngreso')
         contexto = {'empleados':empleado,'empresas':empresas,'departamentos':departamentos}
     return render(request,'empleados/lista_empleados.html',contexto)
 

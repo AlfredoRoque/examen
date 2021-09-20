@@ -31,6 +31,9 @@
         </tbody>
     </table>
     <label for="icono">Agregar</label>
-    <a name="icono" class="btn btn-danger" href="{% url 'crear_departamento'%}"><i class="fas fa-plus-circle"></i></a>
+    <a name="icono" class="btn btn-danger" href="{% url 'crear_departamento'%}"><i class="fas fa-plus-circle"></i></a> {%if request.session.contexto %} {{request.session.contexto.flush}}
+    <div hidden="true" id="mensaje" class="alert alert-success">Se Eliminio con exito</div>
+    {%endif %}
 </div>
+
 {% include 'base/headerFin.html' %} {%endblock%}

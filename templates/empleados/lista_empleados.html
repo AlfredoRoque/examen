@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %} {%block content%} {% csrf_token %}
 <div id="tabla" class="tablaComp">
-    <table class="table table-hover">
+    <table id="tablaE" class="table table-hover tablesorter">
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
@@ -26,11 +26,7 @@
                 <td>{{empleado.empresa.nombre}}</td>
                 <td>{{empleado.departamento.nombre}}</td>
                 <td>{{empleado.correo}}</td>
-                {%if empleado.sexo == "['M']"%}
-                <td>Masculino</td>
-                {%else%}
-                <td>Femenino</td>
-                {%endif%}
+                <td style="text-transform: lowercase;">{{empleado.sexo}}</td>
                 <td>{{empleado.telefono}}</td>
                 <td>{{empleado.celular}}</td>
                 <td>{{empleado.fechaIngreso}}</td>
