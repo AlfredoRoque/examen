@@ -45,9 +45,9 @@
     </fieldset>
 </form>
 {% if form.nombre.value != "None" %}
-    {%block title%}Modificar Empleado{%endblock%}
+<label class="form-label mt-4" for="telefono">1: </label>
 {% endif %}
 {% if form.nombre.value == "None" %}
-    {%block title%}Agregar Empleado{%endblock%}
+<label class="form-label mt-4" for="telefono">2: </label>
 {% endif %}
 {%endblock%}
