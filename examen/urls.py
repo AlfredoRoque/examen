@@ -29,4 +29,4 @@ urlpatterns = [
     path('',LoginView.as_view(template_name='usuario/index.html')),
     path('accounts/login/',LoginView.as_view(template_name='usuario/index.html'),name='login'),
     path('logout/',logout_then_login,name='logout'),
-] +static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+] +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
