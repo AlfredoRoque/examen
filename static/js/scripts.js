@@ -28,16 +28,20 @@ if (form != null) {
 }
 
 
-document.getElementById("close-sidebar").addEventListener("click", function() {
-    document.getElementById("tabla").classList.remove("tablaIncomp");
-    document.getElementById("tabla").classList.add("tablaComp");
-    document.querySelector(".page-wrapper").classList.remove("toggled");
-});
-document.getElementById("show-sidebar").addEventListener("click", function() {
-    document.getElementById("tabla").classList.remove("tablaComp");
-    document.getElementById("tabla").classList.add("tablaIncomp");
-    document.querySelector(".page-wrapper").classList.add("toggled");
-});
+if(document.getElementById("close-sidebar")!=null){
+    document.getElementById("close-sidebar").addEventListener("click", function() {
+        document.getElementById("tabla").classList.remove("tablaIncomp");
+        document.getElementById("tabla").classList.add("tablaComp");
+        document.querySelector(".page-wrapper").classList.remove("toggled");
+    });
+}
+if(document.getElementById("show-sidebar")!=null){
+    document.getElementById("show-sidebar").addEventListener("click", function() {
+        document.getElementById("tabla").classList.remove("tablaComp");
+        document.getElementById("tabla").classList.add("tablaIncomp");
+        document.querySelector(".page-wrapper").classList.add("toggled");
+    });
+}
 
 $(document).ready(function() {
     $("#tablaE").tablesorter();
