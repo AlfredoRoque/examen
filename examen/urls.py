@@ -21,11 +21,9 @@ from django.contrib.auth.views import LoginView, logout_then_login
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
-from . import views
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 urlpatterns = [
-    path('favicon.ico',RedirectView.as_view(url=staticfiles_storage.url('img/favicon.png'))),
     path('admin/', admin.site.urls),
     path('empresa/', include ('apps.empresa.urls')),
     path('departamento/', include ('apps.departamento.urls')),
@@ -34,4 +32,5 @@ urlpatterns = [
     path('',LoginView.as_view(template_name='usuario/index.html')),
     path('accounts/login/',LoginView.as_view(template_name='usuario/index.html'),name='login'),
     path('logout/',logout_then_login,name='logout'),
+    path('favicon.ico',RedirectView.as_view(url=staticfiles_storage.url('img/favicon.png'))),
 ] +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
