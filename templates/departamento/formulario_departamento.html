@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %} {%block header%} {%endblock%} {%block content%}{% include 'base/header-login.html' %} {% load replace %}
+{%block title%}Información del Departamento{%endblock%}
 <form class="form" method="POST">
     {% csrf_token %}
     <fieldset>
