@@ -1,11 +1,5 @@
 {% extends 'base/base.html' %} {%block header%} {%endblock%} {%block content%}{% include 'base/header-login.html' %}
 {% csrf_token %}
-{% if form.nombre.value != "None" %}
-    {%block title%}Modificar Empleado{%endblock%}
-{% endif %}
-{% if form.nombre.value == "None" %}
-    {%block title%}Agregar Empleado{%endblock%}
-{% endif %}
 <form class="form" method="POST">
     <fieldset>
         <div class="divform">
@@ -50,4 +44,10 @@
         <button class="btn btn-primary" type="submit">Guardar</button>
     </fieldset>
 </form>
+{% if form.nombre.value != "None" %}
+    {%block title%}Modificar Empleado{%endblock%}
+{% endif %}
+{% if form.nombre.value == "None" %}
+    {%block title%}Agregar Empleado{%endblock%}
+{% endif %}
 {%endblock%}
