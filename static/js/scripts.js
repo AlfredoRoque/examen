@@ -82,8 +82,10 @@ function setIcon(element, asc) {
 
 
 addEventListener("load", () => {
-    if (document.getElementById("mensaje").getAttribute("hidden")) {
-        document.getElementById("mensaje").removeAttribute("hidden");
+    if(document.getElementById("mensaje")!=null){
+        if (document.getElementById("mensaje").getAttribute("hidden")) {
+            document.getElementById("mensaje").removeAttribute("hidden");
+        }
     }
     setTimeout(function() {
         document.getElementById("mensaje").setAttribute("hidden", "true");
