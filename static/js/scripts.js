@@ -86,8 +86,8 @@ addEventListener("load", () => {
         if (document.getElementById("mensaje").getAttribute("hidden")) {
             document.getElementById("mensaje").removeAttribute("hidden");
         }
+        setTimeout(function() {
+            document.getElementById("mensaje").setAttribute("hidden", "true");
+        }, 5000)
     }
-    setTimeout(function() {
-        document.getElementById("mensaje").setAttribute("hidden", "true");
-    }, 5000)
 })
