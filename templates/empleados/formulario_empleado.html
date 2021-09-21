@@ -46,6 +46,7 @@
 </form>
 {% if form.nombre.value != "None" %}
 <label class="form-label mt-4" for="telefono">1: </label>
+{%block title%}Modificar Empleado{%endblock%}
 {% endif %}
 {% if form.nombre.value == "None" %}
 <label class="form-label mt-4" for="telefono">2: </label>
