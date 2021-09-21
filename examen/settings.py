@@ -81,25 +81,24 @@ WSGI_APPLICATION = 'examen.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'practica',
-#        'USER': 'postgres',
-#        'PASSWORD': '123456',
-#        'HOST': 'localhost',
-#        'PORT': 5432,
-#    }
-#}
-
-import dj_database_url
-from decouple import config
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('postgres://opfilyyknwmrbc:5752be25a65886b69066ab272c1334a8d5cf259f7154d368c84c01bf3460382e@ec2-54-146-84-101.compute-1.amazonaws.com:5432/d8cc5k1sca67oh')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'practica',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': 5432,
+    }
 }
 
+#import dj_database_url
+#from decouple import config
+#DATABASES = {
+#    'default': dj_database_url.config(
+#        default=config('DATABASE_URL')
+#    )
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -150,3 +149,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import dj_database_url  
+db_from_env = dj_database_url.config(conn_max_age=500)  
+DATABASES['default'].update(db_from_env)
