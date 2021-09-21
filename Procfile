@@ -1,1 +1,1 @@
-web: gunicorn empleados-gest.wsgi --log-file -
+web: gunicorn examen.wsgi --log-file -
