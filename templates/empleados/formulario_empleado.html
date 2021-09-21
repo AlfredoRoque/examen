@@ -2,7 +2,8 @@
 {% csrf_token %}
 {%block title%}Crear Empleado{%endblock%}
 {% if form.nombre.value %}
-{%block title%}Modificar Empleado{%endblock%}
+    <label for=""></label>
+    {%block title%}Modificar Empleado{%endblock%}
 {% endif %}
 <form class="form" method="POST">
     <fieldset>
