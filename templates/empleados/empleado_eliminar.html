@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %} {%block header%} {%endblock %}{%block content%}{% include 'base/header-login.html' %}
+{%block title%}Eliminar Empleado{%endblock%}
 <form class="form" method="POST">
     {% csrf_token %}
     <h3>Desea eliminar el Registro del Empleado {{ object.nombre }}?</h3>
